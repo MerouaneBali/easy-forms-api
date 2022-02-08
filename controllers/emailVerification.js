@@ -70,7 +70,7 @@ exports.start = async (email) => {
   try {
     const recepient = email;
     const subject = "Easy Web Form - Email Verification";
-    const htmlContent = `<a>http://localhost:${process.env.EXPRESS_PORT}/authentication/verifyEmail/?token=${token}</a>`;
+    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/authentication/verifyEmail/?token=${token}</a>`;
 
     const info = await sendMail(recepient, subject, htmlContent);
 
@@ -135,7 +135,7 @@ exports.startUpdate = async (email) => {
   try {
     const recepient = email;
     const subject = "Easy Web Form - Update Email Verification";
-    const htmlContent = `<a>http://localhost:${process.env.EXPRESS_PORT}/profile/update/newEmail/?token=${token}</a>`;
+    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/profile/update/newEmail/?token=${token}</a>`;
 
     const info = await sendMail(recepient, subject, htmlContent);
 

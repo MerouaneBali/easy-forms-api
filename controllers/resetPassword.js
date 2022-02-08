@@ -87,7 +87,7 @@ exports.start = async (email, password) => {
   try {
     const recepient = email;
     const subject = "Easy Web Form - Reset Password";
-    const htmlContent = `<a>http://localhost:${process.env.EXPRESS_PORT}/authentication/resetPassword/?token=${token}</a>`;
+    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/authentication/resetPassword/?token=${token}</a>`;
 
     const info = await sendMail(recepient, subject, htmlContent);
 
