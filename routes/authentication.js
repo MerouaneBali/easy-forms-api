@@ -489,4 +489,26 @@ router.get("/logout", authorized, (req, res) => {
   });
 });
 
+/**
+ *
+ * @name /isUserLoggedIn-[GET]
+ *
+ * @function
+ *
+ * @memberof module:authentication
+ *
+ * @description Destroy user's auth session loggin him out
+ *
+ * @requires authorized
+ *
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {200} In case user is logged in
+ * @returns {500} In case of any internal server error
+ */
+router.get("/isUserLoggedIn", authorized, (req, res) => {
+  return res.sendStatus(200);
+});
+
 module.exports = router;
