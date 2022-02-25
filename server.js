@@ -46,7 +46,7 @@ app.use(
     cookie: {
       sameSite: "none", // if true browsers with only set cookie if front-end is on same domain
       // domain: "https://easy-forms.netlify.app",
-      secure: true, // if true only transmit cookie over https
+      secure: false, // if true only transmit cookie over https
       // httpOnly: false, // if true prevent client side JS from reading the cookie
       maxAge: Number(process.env.AUTHORIZATION_SESSION_EXPIRATION_TIME), // session max age in miliseconds
     },
