@@ -507,7 +507,7 @@ router.get("/logout", authorized, (req, res) => {
  * @returns {200} In case user is logged in
  * @returns {500} In case of any internal server error
  */
-router.get("/isUserLoggedIn", authorized, (req, res) => {
+router.get("/", authorized, (req, res) => {
   return res.sendStatus(200);
 });
 
