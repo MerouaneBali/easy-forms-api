@@ -491,13 +491,13 @@ router.get("/logout", authorized, (req, res) => {
 
 /**
  *
- * @name /isUserLoggedIn-[GET]
+ * @name /-[GET]
  *
  * @function
  *
  * @memberof module:authentication
  *
- * @description Destroy user's auth session loggin him out
+ * @description Checks if user is logged in using authorized middleware
  *
  * @requires authorized
  *
@@ -505,7 +505,10 @@ router.get("/logout", authorized, (req, res) => {
  * @param {callback} middleware - Express middleware
  *
  * @returns {200} In case user is logged in
- * @returns {500} In case of any internal server error
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
  */
 router.get("/", authorized, (req, res) => {
   return res.sendStatus(200);
