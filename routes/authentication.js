@@ -479,7 +479,10 @@ router.get("/resetPassword", async (req, res) => {
  * @param {callback} middleware - Express middleware
  *
  * @returns {200} In case user was successfully logged out
- * @returns {500} In case of any internal server error
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
  */
 router.get("/logout", authorized, (req, res) => {
   req.session.destroy((err) => {
