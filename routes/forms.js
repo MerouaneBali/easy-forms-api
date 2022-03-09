@@ -119,10 +119,26 @@ router.post(
     const { formId, projectId } = req.params;
 
     try {
+      const result = Form.exists({
+        author: req.user._id,
+        _id: formId,
+      });
+
+      if (result) throw new Error(409);
+    } catch (error) {
+      if (error.message === "409") {
+        if (!result) return res.sendStatus(409);
+      }
+
+      return res.sendStatus(500);
+    }
+
+    try {
       await Form.findOneAndUpdate(
         {
+          author: req.user._id,
           _id: formId,
-          // project: projectId,
+          project: projectId,
         },
         { $push: { inbox: { data: { ...req.body } } } }
       );
