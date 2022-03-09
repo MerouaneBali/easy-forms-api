@@ -107,7 +107,34 @@ router.post("/", authorized, async (req, res) => {
   }
 });
 
-// TODO: Protect
+/**
+ * Route serving update form.
+ *
+ * @todo Protect using authorized middleware
+ * @todo Limit to target domain names and IP addresses
+ *
+ * @name /[:formId]-[POST]
+ *
+ * @function
+ *
+ * @memberof module:forms
+ *
+ * @description Submit post request to target form
+ *
+ * @param {string} path - Express path
+ * @param {callback} cors - CORS middleware
+ * @param {callback} authorized - Authorized middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {200} In case post request was successfully submitted
+ * @returns {404} In case form does not exists
+ * @returns {500} In case of any internal server error
+ */
 router.post(
   "/:formId",
   cors({
