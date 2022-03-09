@@ -169,7 +169,6 @@ router.post("/login", async (req, res) => {
 
       try {
         req.session.user = user.id;
-        console.log(req.session);
 
         return res.sendStatus(200);
       } catch (error) {
