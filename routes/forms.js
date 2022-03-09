@@ -19,7 +19,7 @@ const formsValidationSchemas = require("../validation/formsValidationSchemas");
 /**
  * Route serving update form.
  *
- * @name /create-[POST]
+ * @name /-[POST]
  *
  * @function
  *
@@ -30,7 +30,12 @@ const formsValidationSchemas = require("../validation/formsValidationSchemas");
  * @param {string} path - Express path
  * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
-
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
  * @returns {201} In case form was successfully created
  * @returns {400} In case of validation error
  * @returns {404} In case project does not exists
