@@ -124,10 +124,10 @@ router.post(
         _id: formId,
       });
 
-      if (result) throw new Error(409);
+      if (!result) throw new Error(404);
     } catch (error) {
-      if (error.message === "409") {
-        if (!result) return res.sendStatus(409);
+      if (error.message === "404") {
+        if (!result) return res.sendStatus(404);
       }
 
       return res.sendStatus(500);
