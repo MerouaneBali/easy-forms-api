@@ -210,12 +210,18 @@ router.patch(
 
       const message = await form.inbox.id(messageId);
 
+      if (!message) throw new Error(404);
+
       message.opened = true;
 
       await form.save();
 
       res.sendStatus(200);
     } catch (error) {
+      if (error.message === "404") {
+        return res.sendStatus(404);
+      }
+
       return res.sendStatus(500);
     }
   }
