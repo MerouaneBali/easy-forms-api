@@ -152,13 +152,14 @@ router.post(
         return res.sendStatus(404);
       }
 
+      console.log(error);
+
       return res.sendStatus(500);
     }
 
     try {
       await Form.findOneAndUpdate(
         {
-          author: req.user._id,
           _id: formId,
           project: projectId,
         },
