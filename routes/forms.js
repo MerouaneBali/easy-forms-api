@@ -143,7 +143,6 @@ router.post(
 
     try {
       const result = await Form.exists({
-        author: req.user._id,
         _id: formId,
       });
 
@@ -201,6 +200,7 @@ router.patch("/:formId/open/:messageId", authorized, async (req, res) => {
   try {
     const result = await Form.exists({
       _id: formId,
+      author: req.user._id,
     });
 
     if (!result) throw new Error(404);
@@ -261,6 +261,7 @@ router.patch("/:formId/resolve/:messageId", authorized, async (req, res) => {
   try {
     const result = await Form.exists({
       _id: formId,
+      author: req.user._id,
     });
 
     if (!result) throw new Error(404);
@@ -322,6 +323,7 @@ router.delete("/:formId/:messageId", authorized, async (req, res) => {
   try {
     const result = await Form.exists({
       _id: formId,
+      author: req.user._id,
     });
 
     if (!result) throw new Error(404);
