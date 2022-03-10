@@ -17,7 +17,7 @@ const formsValidationSchemas = require("../validation/formsValidationSchemas");
  */
 
 /**
- * Route serving update form.
+ * Create new form.
  *
  * @name /-[POST]
  *
@@ -111,9 +111,8 @@ router.post("/", authorized, async (req, res) => {
 });
 
 /**
- * Route serving update form.
+ * Submit post request to target form.
  *
- * @todo Protect using authorized middleware
  * @todo Limit to target domain names and IP addresses
  *
  * @name /[:formId]-[POST]
@@ -126,13 +125,7 @@ router.post("/", authorized, async (req, res) => {
  *
  * @param {string} path - Express path
  * @param {callback} cors - CORS middleware
- * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
- *
- * @returns {401} In case user in not authenticated - authorized middleware
- * @returns {403} In case user emailVerified property in set to false - authorized middleware
- * @returns {404} In case user does not exist - authorized middleware
- * @returns {500} In case server internal error happends - authorized middleware
  *
  * @returns {200} In case post request was successfully submitted
  * @returns {404} In case form does not exists
@@ -180,7 +173,26 @@ router.post(
   }
 );
 
-// TODO: Protect
+/**
+ * Mark form message as opened.
+ *
+ * @todo Limit to target domain names and IP addresses
+ *
+ * @name /[:formId]/open/[:messageId]-[PATCH]
+ *
+ * @function
+ *
+ * @memberof module:forms
+ *
+ * @description Mark form message as opened.
+ *
+ * @param {callback} cors - CORS middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {200} In case post request was successfully submitted
+ * @returns {404} In case form or message does not exists
+ * @returns {500} In case of any internal server error
+ */
 router.patch(
   "/:formId/open/:messageId",
   cors({
@@ -227,7 +239,26 @@ router.patch(
   }
 );
 
-// TODO: Protect
+/**
+ * Mark form message as resolved.
+ *
+ * @todo Limit to target domain names and IP addresses
+ *
+ * @name /[:formId]/resolve/[:messageId]-[PATCH]
+ *
+ * @function
+ *
+ * @memberof module:forms
+ *
+ * @description Mark form message as resolved.
+ *
+ * @param {callback} cors - CORS middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {200} In case post request was successfully submitted
+ * @returns {404} In case form or message does not exists
+ * @returns {500} In case of any internal server error
+ */
 router.patch(
   "/:formId/resolve/:messageId",
   cors({
@@ -275,7 +306,26 @@ router.patch(
   }
 );
 
-// TODO: Protect
+/**
+ * Delete posted message from form
+ *
+ * @todo Limit to target domain names and IP addresses
+ *
+ * @name /[:formId]/resolve/[:messageId]-[DELETE]
+ *
+ * @function
+ *
+ * @memberof module:forms
+ *
+ * @description Delete posted message from form
+ *
+ * @param {callback} cors - CORS middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {200} In case post request was successfully submitted
+ * @returns {404} In case form or message does not exists
+ * @returns {500} In case of any internal server error
+ */
 router.delete(
   "/:formId/:messageId",
   cors({
@@ -318,7 +368,7 @@ router.delete(
 /**
  * Route serving update form.
  *
- * @name /-[POST]
+ * @name /[:projectId]/[:formId]-[GET]
  *
  * @function
  *
