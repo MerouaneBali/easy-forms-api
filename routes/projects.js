@@ -16,9 +16,9 @@ const projectsValidationSchemas = require("../validation/projectsValidationSchem
  */
 
 /**
- * Route serving update form.
+ * Create new project
  *
- * @name /create-[POST]
+ * @name /-[POST]
  *
  * @function
  *
@@ -29,6 +29,11 @@ const projectsValidationSchemas = require("../validation/projectsValidationSchem
  * @param {string} path - Express path
  * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
  *
  * @returns {201} In case project was successfully created
  * @returns {400} In case of validation error
@@ -86,6 +91,32 @@ router.post("/", authorized, async (req, res) => {
   }
 });
 
+/**
+ * Get all projects
+ *
+ * @name /-[GET]
+ *
+ * @function
+ *
+ * @memberof module:projects
+ *
+ * @description Get all projects
+ *
+ * @param {string} path - Express path
+ * @param {callback} authorized - Authorized middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {201} In case project was successfully created
+ * @returns {400} In case of validation error
+ * @returns {409} In case form with the same name already exists
+ * @returns {409} In case user with the same email already exists
+ * @returns {500} In case of any internal server error
+ */
 router.get("/", authorized, async (req, res) => {
   const { Project } = require("../models");
 
@@ -113,6 +144,33 @@ router.get("/", authorized, async (req, res) => {
   }
 });
 
+
+/**
+ * Update project
+ *
+ * @name /update-[POST]
+ *
+ * @function
+ *
+ * @memberof module:projects
+ *
+ * @description Update project
+ *
+ * @param {string} path - Express path
+ * @param {callback} authorized - Authorized middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {201} In case project was successfully created
+ * @returns {400} In case of validation error
+ * @returns {409} In case form with the same name already exists
+ * @returns {409} In case user with the same email already exists
+ * @returns {500} In case of any internal server error
+ */
 router.post("/update", authorized, async (req, res) => {
   const { Project } = require("../models");
 
@@ -173,6 +231,32 @@ router.post("/update", authorized, async (req, res) => {
   // }
 });
 
+/**
+ * Delete project
+ *
+ * @name /-[POST]
+ *
+ * @function
+ *
+ * @memberof module:projects
+ *
+ * @description Delete project
+ *
+ * @param {string} path - Express path
+ * @param {callback} authorized - Authorized middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {201} In case project was successfully created
+ * @returns {400} In case of validation error
+ * @returns {409} In case form with the same name already exists
+ * @returns {409} In case user with the same email already exists
+ * @returns {500} In case of any internal server error
+ */
 router.post("/delete", authorized, async (req, res) => {
   const { Project, Form } = require("../models");
 
