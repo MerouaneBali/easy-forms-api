@@ -63,7 +63,7 @@ router.post("/", authorized, async (req, res) => {
   }
 
   try {
-    const result = Project.exists({ author: req.user._id, _id: value.project });
+    const result = await Project.exists({ author: req.user._id, _id: value.project });
 
     if (!result) throw new Error(404);
   } catch (error) {
@@ -146,7 +146,7 @@ router.post(
     const { formId, projectId } = req.params;
 
     try {
-      const result = Form.exists({
+      const result = await Form.exists({
         author: req.user._id,
         _id: formId,
       });
