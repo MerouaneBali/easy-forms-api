@@ -315,6 +315,31 @@ router.delete(
   }
 );
 
+/**
+ * Route serving update form.
+ *
+ * @name /-[POST]
+ *
+ * @function
+ *
+ * @memberof module:forms
+ *
+ * @description Create new form for a project
+ *
+ * @param {string} path - Express path
+ * @param {callback} authorized - Authorized middleware
+ * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {200} In case form was successfully fetched
+ * @returns {400} In case of validation error
+ * @returns {404} In case form does not exists
+ * @returns {500} In case of any internal server error
+ */
 router.get("/:projectId/:formId", authorized, async (req, res) => {
   const { Form } = require("../models");
 
