@@ -186,58 +186,52 @@ router.post(
  *
  * @description Mark form message as opened.
  *
- * @param {callback} cors - CORS middleware
+ * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
  *
  * @returns {200} In case post request was successfully submitted
  * @returns {404} In case form or message does not exists
  * @returns {500} In case of any internal server error
  */
-router.patch(
-  "/:formId/open/:messageId",
-  cors({
-    origin: ["*"],
-  }),
-  async (req, res) => {
-    const { Form } = require("../models");
+router.patch("/:formId/open/:messageId", authorized, async (req, res) => {
+  const { Form } = require("../models");
 
-    const { formId, messageId } = req.params;
+  const { formId, messageId } = req.params;
 
-    try {
-      const result = await Form.exists({
-        _id: formId,
-      });
+  try {
+    const result = await Form.exists({
+      _id: formId,
+    });
 
-      if (!result) throw new Error(404);
-    } catch (error) {
-      if (error.message === "404") {
-        return res.sendStatus(404);
-      }
-
-      return res.sendStatus(500);
+    if (!result) throw new Error(404);
+  } catch (error) {
+    if (error.message === "404") {
+      return res.sendStatus(404);
     }
 
-    try {
-      const form = await Form.findById(formId);
-
-      const message = await form.inbox.id(messageId);
-
-      if (!message) throw new Error(404);
-
-      message.opened = true;
-
-      await form.save();
-
-      res.sendStatus(200);
-    } catch (error) {
-      if (error.message === "404") {
-        return res.sendStatus(404);
-      }
-
-      return res.sendStatus(500);
-    }
+    return res.sendStatus(500);
   }
-);
+
+  try {
+    const form = await Form.findById(formId);
+
+    const message = await form.inbox.id(messageId);
+
+    if (!message) throw new Error(404);
+
+    message.opened = true;
+
+    await form.save();
+
+    res.sendStatus(200);
+  } catch (error) {
+    if (error.message === "404") {
+      return res.sendStatus(404);
+    }
+
+    return res.sendStatus(500);
+  }
+});
 
 /**
  * Mark form message as resolved.
@@ -252,59 +246,53 @@ router.patch(
  *
  * @description Mark form message as resolved.
  *
- * @param {callback} cors - CORS middleware
+ * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
  *
  * @returns {200} In case post request was successfully submitted
  * @returns {404} In case form or message does not exists
  * @returns {500} In case of any internal server error
  */
-router.patch(
-  "/:formId/resolve/:messageId",
-  cors({
-    origin: ["*"],
-  }),
-  async (req, res) => {
-    const { Form } = require("../models");
+router.patch("/:formId/resolve/:messageId", authorized, async (req, res) => {
+  const { Form } = require("../models");
 
-    const { formId, messageId } = req.params;
+  const { formId, messageId } = req.params;
 
-    try {
-      const result = await Form.exists({
-        _id: formId,
-      });
+  try {
+    const result = await Form.exists({
+      _id: formId,
+    });
 
-      if (!result) throw new Error(404);
-    } catch (error) {
-      if (error.message === "404") {
-        return res.sendStatus(404);
-      }
-
-      return res.sendStatus(500);
+    if (!result) throw new Error(404);
+  } catch (error) {
+    if (error.message === "404") {
+      return res.sendStatus(404);
     }
 
-    try {
-      const form = await Form.findById(formId);
-
-      const message = await form.inbox.id(messageId);
-
-      if (!message) throw new Error(404);
-
-      message.opened = true;
-      message.resolved = true;
-
-      await form.save();
-
-      res.sendStatus(200);
-    } catch (error) {
-      if (error.message === "404") {
-        return res.sendStatus(404);
-      }
-
-      return res.sendStatus(500);
-    }
+    return res.sendStatus(500);
   }
-);
+
+  try {
+    const form = await Form.findById(formId);
+
+    const message = await form.inbox.id(messageId);
+
+    if (!message) throw new Error(404);
+
+    message.opened = true;
+    message.resolved = true;
+
+    await form.save();
+
+    res.sendStatus(200);
+  } catch (error) {
+    if (error.message === "404") {
+      return res.sendStatus(404);
+    }
+
+    return res.sendStatus(500);
+  }
+});
 
 /**
  * Delete posted message from form
@@ -319,51 +307,45 @@ router.patch(
  *
  * @description Delete posted message from form
  *
- * @param {callback} cors - CORS middleware
+ * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
  *
  * @returns {200} In case post request was successfully submitted
  * @returns {404} In case form or message does not exists
  * @returns {500} In case of any internal server error
  */
-router.delete(
-  "/:formId/:messageId",
-  cors({
-    origin: ["*"],
-  }),
-  async (req, res) => {
-    const { Form } = require("../models");
+router.delete("/:formId/:messageId", authorized, async (req, res) => {
+  const { Form } = require("../models");
 
-    const { formId, messageId } = req.params;
+  const { formId, messageId } = req.params;
 
-    try {
-      const result = await Form.exists({
-        _id: formId,
-      });
+  try {
+    const result = await Form.exists({
+      _id: formId,
+    });
 
-      if (!result) throw new Error(404);
-    } catch (error) {
-      if (error.message === "404") {
-        return res.sendStatus(404);
-      }
-
-      return res.sendStatus(500);
+    if (!result) throw new Error(404);
+  } catch (error) {
+    if (error.message === "404") {
+      return res.sendStatus(404);
     }
 
-    try {
-      await Form.findOneAndUpdate(
-        {
-          _id: formId,
-        },
-        { $pull: { inbox: { _id: messageId } } }
-      ).then((doc) => doc);
-
-      res.sendStatus(200);
-    } catch (error) {
-      return res.sendStatus(500);
-    }
+    return res.sendStatus(500);
   }
-);
+
+  try {
+    await Form.findOneAndUpdate(
+      {
+        _id: formId,
+      },
+      { $pull: { inbox: { _id: messageId } } }
+    ).then((doc) => doc);
+
+    res.sendStatus(200);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
+});
 
 /**
  * Route serving update form.
