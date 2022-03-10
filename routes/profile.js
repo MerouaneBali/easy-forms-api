@@ -19,21 +19,24 @@ const emailVerification = require("../controllers/emailVerification");
  */
 
 /**
- * Route serving update form.
- *
  * @name /-[GET]
  *
  * @function
  *
  * @memberof module:profile
  *
- * @description Updates user's object (send email verification link if user's `email` property is updated)
+ * @description Get user's object
  *
  * @param {string} path - Express path
  * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
  *
- * @returns {200} In case user is successfully updated
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
+ *
+ * @returns {200} In case user is successfully fetched and returned
  * @returns {400} In case of validation error
  * @returns {409} In case user with the same email already exists
  * @returns {500} In case of any internal server error
@@ -49,8 +52,6 @@ router.get("/", authorized, async (req, res) => {
 });
 
 /**
- * Route serving update form.
- *
  * @name /update-[POST]
  *
  * @function
@@ -62,6 +63,11 @@ router.get("/", authorized, async (req, res) => {
  * @param {string} path - Express path
  * @param {callback} authorized - Authorized middleware
  * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
  *
  * @returns {200} In case user is successfully updated
  * @returns {400} In case of validation error
@@ -156,6 +162,11 @@ router.post("/update", authorized, async (req, res) => {
  *
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
+ *
+ * @returns {401} In case user in not authenticated - authorized middleware
+ * @returns {403} In case user emailVerified property in set to false - authorized middleware
+ * @returns {404} In case user does not exist - authorized middleware
+ * @returns {500} In case server internal error happends - authorized middleware
  *
  * @returns {200} In case `email` property was successfully overriden and set to new email
  * @returns {400} In case update email verification token is invalid
