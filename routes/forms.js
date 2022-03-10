@@ -192,6 +192,20 @@ router.patch(
     const { formId, messageId } = req.params;
 
     try {
+      const result = await Form.exists({
+        _id: formId,
+      });
+
+      if (!result) throw new Error(404);
+    } catch (error) {
+      if (error.message === "404") {
+        return res.sendStatus(404);
+      }
+
+      return res.sendStatus(500);
+    }
+
+    try {
       const form = await Form.findById(formId);
 
       const message = await form.inbox.id(messageId);
