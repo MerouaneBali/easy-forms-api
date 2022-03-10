@@ -63,12 +63,15 @@ router.post("/", authorized, async (req, res) => {
   }
 
   try {
-    const result = await Project.exists({ author: req.user._id, _id: value.project });
+    const result = await Project.exists({
+      author: req.user._id,
+      _id: value.project,
+    });
 
     if (!result) throw new Error(404);
   } catch (error) {
     if (error.message === "404") {
-      if (!result) return res.sendStatus(404);
+      return res.sendStatus(404);
     }
 
     return res.sendStatus(500);
@@ -154,7 +157,7 @@ router.post(
       if (!result) throw new Error(404);
     } catch (error) {
       if (error.message === "404") {
-        if (!result) return res.sendStatus(404);
+        return res.sendStatus(404);
       }
 
       return res.sendStatus(500);
