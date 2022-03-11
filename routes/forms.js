@@ -166,7 +166,7 @@ router.post(
         { $push: { inbox: { data: { ...req.body } } } }
       );
 
-      res.sendStatus(200);
+      res.redirect(302, "https://easy-forms.netlify.app/200");
     } catch (error) {
       return res.sendStatus(500);
     }
