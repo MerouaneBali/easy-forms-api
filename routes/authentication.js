@@ -98,9 +98,7 @@ router.post("/register", async (req, res) => {
 
     try {
       await emailVerification.start(user.email);
-      console.log("email sent to:" + user.email)
     } catch (error) {
-      console.error(error)
       // NOTE: Ingore error and continue
     }
 
