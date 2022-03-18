@@ -7,6 +7,7 @@ const { redisPasswordResetsClient } = require("../connections/redisConnection");
 const tokenValidationSchema = require("../validation/tokenValidationSchema");
 
 const sendMail = require("../utils/sendMail");
+const genericEmailTemplate = require("../emails/genericEmailTemplate");
 
 // const env = require("../configs/env");
 
@@ -87,9 +88,17 @@ exports.start = async (email, password) => {
   try {
     const recepient = email;
     const subject = "Easy Web Form - Reset Password";
-    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/authentication/resetPassword/?token=${token}</a>`;
+    const pathname =
+      "https://easy-forms-api.herokuapp.com/authentication/resetPassword/";
+    const html = genericEmailTemplate(pathname, token, {
+      title: "Easy Forms - Reset Password",
+      subtitle:
+        "Click the `Reset My Password` button to confirm and reset your password",
+      button: "Reset My Password",
+      small: "If the button above doesn't work, use the link below",
+    });
 
-    const info = await sendMail(recepient, subject, htmlContent);
+    const info = await sendMail(recepient, subject, html);
 
     return info;
   } catch (error) {

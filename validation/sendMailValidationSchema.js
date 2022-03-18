@@ -6,7 +6,7 @@ exports.emailForm = joi
     from: generalValidationSchema.email.required(),
     to: generalValidationSchema.email.required(),
     subject: joi.string().min(10).max(50).required(),
-    text: joi.string().min(40).max(1000),
+    text: joi.string().min(40).max(2500),
     html: joi.string(),
   })
   .xor("text", "html");

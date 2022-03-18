@@ -8,6 +8,7 @@ const {
 const tokenValidationSchema = require("../validation/tokenValidationSchema");
 
 const sendMail = require("../utils/sendMail");
+const genericEmailTemplate = require("../emails/genericEmailTemplate");
 
 /**
  * @module emailVerification
@@ -69,10 +70,17 @@ exports.start = async (email) => {
   /** Send verification email */
   try {
     const recepient = email;
-    const subject = "Easy Web Form - Email Verification";
-    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/authentication/verifyEmail/?token=${token}</a>`;
+    const subject = "Easy Forms - Email Verification";
+    const pathname =
+      "https://easy-forms-api.herokuapp.com/authentication/verifyEmail/";
+    const html = genericEmailTemplate(pathname, token, {
+      title: "Welcome to Easy Forms API",
+      subtitle: "Click the `Verify Email` button to confirm your email",
+      button: "Verify Email",
+      small: "If the button above doesn't work, use the link below",
+    });
 
-    const info = await sendMail(recepient, subject, htmlContent);
+    const info = await sendMail(recepient, subject, html);
 
     return info;
   } catch (error) {
@@ -134,10 +142,18 @@ exports.startUpdate = async (email) => {
   /** Send verification email */
   try {
     const recepient = email;
-    const subject = "Easy Web Form - Update Email Verification";
-    const htmlContent = `<a>https://easy-forms-api.herokuapp.com/profile/update/newEmail/?token=${token}</a>`;
+    const subject = "Easy Forms - Update Email";
+    const pathname =
+      "https://easy-forms-api.herokuapp.com/profile/update/newEmail/";
+    const html = genericEmailTemplate(pathname, token, {
+      title: "Update Your Easy Forms Account",
+      subtitle:
+        "Click the `Verify Email` button to confirm and update your account to this email",
+      button: "Verify Email",
+      small: "If the button above doesn't work, use the link below",
+    });
 
-    const info = await sendMail(recepient, subject, htmlContent);
+    const info = await sendMail(recepient, subject, html);
 
     return info;
   } catch (error) {

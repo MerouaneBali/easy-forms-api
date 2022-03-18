@@ -1,4 +1,5 @@
 const { nodemailerClient } = require("../connections/nodemailerConnection");
+const { htmlToText } = require("nodemailer-html-to-text");
 const sendMailValidationSchema = require("../validation/sendMailValidationSchema");
 const requiredArg = require("./requiredArg");
 
@@ -20,12 +21,11 @@ const requiredArg = require("./requiredArg");
  *
  * @throws {Error} Nodemailer error when sending email
  */
-const sendMail = async (recepient, subject, textContent, htmlContent) => {
+const sendMail = async (recepient, subject, htmlContent) => {
   const options = {
     from: process.env.GMAIL_ACCOUNT_USERNAME,
     to: recepient,
     subject: subject,
-    text: textContent,
     html: htmlContent,
   };
 
@@ -34,6 +34,8 @@ const sendMail = async (recepient, subject, textContent, htmlContent) => {
   if (error) throw Error(error);
 
   try {
+    await nodemailerClient.use("compile", htmlToText());
+
     const info = await nodemailerClient.sendMail(value);
 
     return info;
