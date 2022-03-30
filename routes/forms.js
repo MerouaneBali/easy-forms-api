@@ -139,7 +139,7 @@ router.post(
   async (req, res) => {
     const { Form } = require("../models");
 
-    const { formId, projectId } = req.params;
+    const { formId } = req.params;
 
     try {
       const result = await Form.exists({
@@ -152,8 +152,6 @@ router.post(
         return res.sendStatus(404);
       }
 
-      console.log(error);
-
       return res.sendStatus(500);
     }
 
@@ -161,7 +159,6 @@ router.post(
       await Form.findOneAndUpdate(
         {
           _id: formId,
-          project: projectId,
         },
         { $push: { inbox: { data: { ...req.body } } } }
       );
