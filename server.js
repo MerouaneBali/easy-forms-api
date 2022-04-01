@@ -56,6 +56,7 @@ app.use(
   cors({
     origin: [
       "https://easy-forms.netlify.app",
+      "https://easy-forms-dev.netlify.app",
 
       "http://localhost:3000",
       "http://127.0.0.1:3000",
